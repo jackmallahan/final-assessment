@@ -1,23 +1,28 @@
 header {
   margin: auto;
-  width: 90%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
 }
 
+.title-alt {
+  color: #F37402;
+}
+
 .drop-down {
+  color: #1A7DD7;
   cursor: pointer;
-  text-decoration: underline;
 }
 
 .drop-down:hover {
-  color: blue;
+  color: #F37402;
 }
 
 .card-display {
+  margin: auto;
   display: flex;
   justify-content: space-around;
+  width: 95%;
 }
 
 .inventory {
@@ -38,6 +43,16 @@ header {
   margin-top: 20px;
 }
 
+.title-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #1A7DD7;
+  color: white;
+  width: 100%;
+  margin: 0;
+}
+
 .item-description {
   width: 80%;
   text-align: center;
@@ -47,11 +62,15 @@ header {
   width: 100px;
 }
 
+.item-price {
+  align-self: flex-end;
+}
+
 .add-btn {
   width: 100%;
   height: 20px;
   color: white;
-  background: blue;
+  background: #F37402;
   cursor: pointer;
   text-align: center;
 }
@@ -59,5 +78,41 @@ header {
 .history,
 .cart-page {
   display: none;
-  width: 30%;
+  width: 25%;
+}
+
+.cart-page {
+  text-align: right;
+}
+
+.cart-title-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.cart-title-container h2,
+.history-page h2 {
+  color: #F37402;
+}
+
+.cart-card {
+  display: flex;
+  justify-content: space-between;
+}
+
+.order-btn-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.order-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.order-info {
+  align-self: center;
 }
