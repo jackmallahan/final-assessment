@@ -47,6 +47,17 @@ header {
   width: 100px;
 }
 
-.history {
+.add-btn {
+  width: 100%;
+  height: 20px;
+  color: white;
+  background: blue;
+  cursor: pointer;
+  text-align: center;
+}
+
+.history,
+.cart-page {
   display: none;
+  width: 30%;
 }
