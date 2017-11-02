@@ -1,4 +1,6 @@
 header {
+  margin: auto;
+  width: 90%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -11,6 +13,11 @@ header {
 
 .drop-down:hover {
   color: blue;
+}
+
+.card-display {
+  display: flex;
+  justify-content: space-around;
 }
 
 .inventory {
@@ -38,4 +45,8 @@ header {
 
 .item-image {
   width: 100px;
+}
+
+.history {
+  display: none;
 }
