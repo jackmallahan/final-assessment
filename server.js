@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 3001);
 
 app.listen(app.get('port'), () => {
 	/* eslint-disable no-alert, no-console */
@@ -28,7 +28,6 @@ app.get('/api/v1/inventory', (request, response) => {
 
 app.get('/api/v1/inventory/:id', (request, response) => {
 	const { id } = request.params;
-
 	database('inventory')
 		.where({ ID: id })
 		.select()
@@ -39,28 +38,23 @@ app.get('/api/v1/inventory/:id', (request, response) => {
 		.catch(error => response.status(500).json({ error }));
 });
 
-app.post('/api/v1/inventory/', (request, response) => {
-	const item = request.body;
-	console.log(item);
-	// const keys = [ 'TITLE', 'DESCRIPTION', 'IMAGE', 'PRICE' ];
+app.get('/api/v1/history', (request, response) => {
+	database('history')
+		.select()
+		.then(order => response.status(200).json(order))
+		.catch(error => response.status(500).json({ error }));
+});
 
-	// for (const requiredParameter of keys) {
-	// 	if (!item[requiredParameter]) {
-	// 		return response.status(422).send({
-	// 			error: `Expected format: { 'TITLE', 'DESCRIPTION', 'IMAGE', 'PRICE' }. You're missing a ${requiredParameter} property.`
-	// 		});
-	// 	}
-	// }
-
-	database('inventory')
-		.insert(item, '*')
+app.post('/api/v1/history', (request, response) => {
+	const order = request.body;
+	database('history')
+		.insert(order, '*')
 		.then(item => response.status(201).json(item))
 		.catch(error => response.status(500).json({ error }));
 });
 
 app.delete('/api/v1/inventory/:id', (request, response) => {
 	const { id } = request.params;
-
 	database('inventory')
 		.where({ ID: id })
 		.del()
