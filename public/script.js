@@ -8,20 +8,32 @@ const getInventory = () => {
 const getHistory = () => {
   fetch('/api/v1/history')
     .then(response => response.json())
-    .then(response => console.log(response))
+    .then(response => appendHistory(response))
     .catch(error => console.log(error))
 }
 
-const appendInventory = (itemArray) => {
+const appendInventory = itemArray => {
   itemArray.forEach(item => {
     $('.inventory').append(`
-        <div class='item-card'>
+        <article class='item-card'>
           <h3 class='item-title'>${item.TITLE}</h3>
           <img class='item-image' src=${item.IMAGE} />
           <p class='item-description'>${item.DESCRIPTION}</p>
           <h5 class='item-price'>${item.PRICE}</h5>
           <button class='add-btn'>Add to Cart</button>
-        </div>
+        </article>
+      `)
+  })
+}
+
+const appendHistory = historyArray => {
+  historyArray.forEach(order => {
+    $('.history').append(`
+        <article class='order-card'>
+          <h3 class='order-id'>Order #${order.ID}</h3>
+          <h5 class='order-date'>Order Date: ${order.created_at.slice(0, 10)}</h5>
+          <h5 class='order-total'>Order Total: $${order.TOTAL}</h5>
+        </article>
       `)
   })
 }
@@ -30,4 +42,8 @@ const appendInventory = (itemArray) => {
 $(document).ready(()=> {
   getInventory();
   getHistory();
+})
+
+$('.order-history').click(() => {
+  $('.history').toggle()
 })
