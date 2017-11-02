@@ -3,28 +3,28 @@ const getInventory = () => {
     .then(response => response.json())
     .then(response => appendInventory(response))
     .catch(error => console.log(error))
-}
+};
 
 const getHistory = () => {
   fetch('/api/v1/history')
     .then(response => response.json())
     .then(response => appendHistory(response))
     .catch(error => console.log(error))
-}
+};
 
 const appendInventory = itemArray => {
   itemArray.forEach(item => {
     $('.inventory').append(`
         <article class='item-card'>
-          <h3 class='item-title'>${item.TITLE}</h3>
+          <h3 class='item-title' >${item.TITLE}</h3>
           <img class='item-image' src=${item.IMAGE} />
           <p class='item-description'>${item.DESCRIPTION}</p>
-          <h5 class='item-price'>${item.PRICE}</h5>
-          <button class='add-btn'>Add to Cart</button>
+          <h5 class='item-price' >${item.PRICE}</h5>
+          <div class='add-btn' data-title='${item.TITLE}' data-price=${item.PRICE}>Add to Cart</div>
         </article>
       `)
   })
-}
+};
 
 const appendHistory = historyArray => {
   historyArray.forEach(order => {
@@ -36,14 +36,44 @@ const appendHistory = historyArray => {
         </article>
       `)
   })
+};
+
+const getCart = () => {
+  const storedCart = localStorage.getItem('cartArray');
+  const returnedCart = JSON.parse(storedCart) || [];
+  appendCart(returnedCart)
 }
 
+const appendCart = cartArray => {
+  if(!cartArray.length){
+    return null;
+  }
+  cartArray.forEach(item => {
+    console.log(item);
+    $('.cart-items').append(`
+      <article class='cart-card'>
+        <h3 class='item-id'>${item.title}</h3>
+        <h5 class='item-price'>Price: $${item.price}</h5>
+      </article>
+      `);
+  });
+};
+
+const addToCart = e => {
+  $('.cart-items').empty()
+  const storedCart = localStorage.getItem('cartArray');
+  const returnedCart = JSON.parse(storedCart) || [];
+  let newCart = [...returnedCart, {price: e.target.dataset.price, title: e.target.dataset.title}];
+  localStorage.setItem('cartArray', JSON.stringify(newCart));
+  appendCart(newCart);
+}
 
 $(document).ready(()=> {
   getInventory();
   getHistory();
-})
+  getCart();
+});
 
-$('.order-history').click(() => {
-  $('.history').toggle()
-})
+$('.order-history').click(() => $('.history').toggle());
+$('.cart').click(() => $('.cart-page').toggle());
+$('.inventory').on('click', '.add-btn', addToCart)
