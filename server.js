@@ -46,10 +46,10 @@ app.get('/api/v1/history', (request, response) => {
 });
 
 app.post('/api/v1/history', (request, response) => {
-  const order = request.body;
+  const source = request.body;
   database('history')
-    .insert(order, '*')
-    .then(item => response.status(201).json(item))
+    .insert(source, '*')
+    .then(source => response.status(201).json(source))
     .catch(error => response.status(500).json({ error }));
 });
 

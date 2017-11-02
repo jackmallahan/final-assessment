@@ -79,10 +79,10 @@ describe('API Routes', () => {
   });
 
   describe('GET /api/v1/history', () => {
-    it('should get all order history', (done) => {
+    it('should get all order history', done => {
       const mockData = {
         ID: 1,
-				TOTAL: "69.69"
+        TOTAL: "69.69"
       };
 
       chai.request(server)
@@ -98,8 +98,21 @@ describe('API Routes', () => {
     });
   });
 
+  describe('POST /api/v1/history', () => {
+    it('should post a new order to order history', done => {
 
-
+      chai.request(server)
+        .post('/api/v1/history')
+        .send({
+          TOTAL: 99.99
+        })
+        .end((error, response) => {
+          response.should.have.status(201);
+          response.body.should.be.a('array');
+          done();
+      });
+    })
+  })
 });
 
 //   describe('GET /api/v1/waves', () => {
