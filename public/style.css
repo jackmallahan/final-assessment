@@ -1,0 +1,41 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.drop-down {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.drop-down:hover {
+  color: blue;
+}
+
+.inventory {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.item-card {
+  width: 30%;
+  height: 50vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  border: 1px solid black;
+  margin-top: 20px;
+}
+
+.item-description {
+  width: 80%;
+  text-align: center;
+}
+
+.item-image {
+  width: 100px;
+}
