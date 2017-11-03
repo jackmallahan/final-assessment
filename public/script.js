@@ -85,18 +85,21 @@ const getTotal = () => {
 
 const checkOut = () => {
   let orderTotal = getTotal();
-  fetch('/api/v1/history', {
-    method: 'POST',
-    body: JSON.stringify({TOTAL: orderTotal}),
-    headers: {'Content-Type': 'application/json'}
-  })
+  if(orderTotal !== 0){
+    fetch('/api/v1/history', {
+      method: 'POST',
+      body: JSON.stringify({TOTAL: orderTotal}),
+      headers: {'Content-Type': 'application/json'}
+    })
     .then(response => response.json())
     .then(() => {
       getHistory();
       localStorage.clear();
+      $('.history').empty();
     })
     .catch(error => console.log(error));
-  $('.cart-items').empty();
+    $('.cart-items').empty();
+  };
 };
 
 $(document).ready(()=> {
@@ -109,6 +112,5 @@ $('.order-history').click(() => $('.history').toggle());
 $('.cart').click(() => $('.cart-page').toggle());
 $('.inventory').on('click', '.add-btn', addToCart);
 $('.order-btn').on('click', () => {
-  $('.history').empty();
   checkOut();
 });
