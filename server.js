@@ -14,9 +14,9 @@ app.use(bodyParser.json());
 app.set('port', process.env.PORT || 3001);
 
 app.listen(app.get('port'), () => {
-  /* eslint-disable no-alert, no-console */
+/* eslint-disable no-alert, no-console */
   console.log(`Final Assessment is running on ${app.get('port')}.`);
-  /* eslint-enable no-alert, no-console */
+/* eslint-enable no-alert, no-console */
 });
 
 app.get('/api/v1/inventory', (request, response) => {
@@ -64,7 +64,7 @@ app.delete('/api/v1/inventory/:id', (request, response) => {
           ? response.status(404).json({ error: `Cannot find Item with ID of ${id}` })
           : response.sendStatus(204)
     )
-  .catch(error => response.status(500).json({ error }));
+    .catch(error => response.status(500).json({ error }));
 });
 
 module.exports = app;
