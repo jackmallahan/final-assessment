@@ -51,7 +51,7 @@ const getCart = () => {
 };
 
 const appendCart = cartArray => {
-  if(!cartArray.length){
+  if (!cartArray.length) {
     return null;
   }
   cartArray.forEach(item => {
@@ -68,9 +68,10 @@ const addToCart = e => {
   $('.cart-items').empty();
   const storedCart = localStorage.getItem('cartArray');
   const returnedCart = JSON.parse(storedCart) || [];
-  let newCart = [...returnedCart, {price: e.target.dataset.price, title: e.target.dataset.title}];
+  let newCart = [...returnedCart, { price: e.target.dataset.price, title: e.target.dataset.title }];
   localStorage.setItem('cartArray', JSON.stringify(newCart));
-  appendCart(newCart);
+  let orderTotal = getTotal();
+  appendCart(newCart, orderTotal);
 };
 
 const getTotal = () => {
@@ -85,32 +86,41 @@ const getTotal = () => {
 
 const checkOut = () => {
   let orderTotal = getTotal();
-  if(orderTotal !== 0){
+  if (orderTotal !== 0) {
     fetch('/api/v1/history', {
       method: 'POST',
-      body: JSON.stringify({TOTAL: orderTotal}),
-      headers: {'Content-Type': 'application/json'}
+      body: JSON.stringify({ TOTAL: orderTotal }),
+      headers: { 'Content-Type': 'application/json' }
     })
-    .then(response => response.json())
-    .then(() => {
-      getHistory();
-      localStorage.clear();
-      $('.history').empty();
-    })
-    .catch(error => console.log(error));
+      .then(response => response.json())
+      .then(() => {
+        getHistory();
+        localStorage.clear();
+        $('.history').empty();
+      })
+      .catch(error => console.log(error));
     $('.cart-items').empty();
-  };
+  }
 };
 
-$(document).ready(()=> {
+const appendTotal = () => {
+  $('.total-display').empty();
+  let total = getTotal();
+  console.log(total);
+  $('.cart-page').append(`<span class='total-display'>Total: $${total}</span>`);
+};
+
+$(document).ready(() => {
   getInventory();
   getHistory();
   getCart();
+  appendTotal();
 });
 
 $('.order-history').click(() => $('.history').toggle());
 $('.cart').click(() => $('.cart-page').toggle());
 $('.inventory').on('click', '.add-btn', addToCart);
+$('.inventory').on('click', '.add-btn', appendTotal);
 $('.order-btn').on('click', () => {
   checkOut();
 });

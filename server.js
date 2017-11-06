@@ -14,9 +14,9 @@ app.use(bodyParser.json());
 app.set('port', process.env.PORT || 3001);
 
 app.listen(app.get('port'), () => {
-/* eslint-disable no-alert, no-console */
+  /* eslint-disable no-alert, no-console */
   console.log(`Final Assessment is running on ${app.get('port')}.`);
-/* eslint-enable no-alert, no-console */
+  /* eslint-enable no-alert, no-console */
 });
 
 app.get('/api/v1/inventory', (request, response) => {
@@ -50,7 +50,8 @@ app.post('/api/v1/history', (request, response) => {
   database('history')
     .insert(order, '*')
     .then(order => response.status(201).json(order))
-    .catch(error => response.status(500).json({ error }));
+    .catch(error => response.status(500).json({ error }))
+    .catch(error => console.log({ error }));
 });
 
 app.delete('/api/v1/inventory/:id', (request, response) => {
@@ -60,9 +61,7 @@ app.delete('/api/v1/inventory/:id', (request, response) => {
     .del()
     .then(
       deleted =>
-        !deleted
-          ? response.status(404).json({ error: `Cannot find Item with ID of ${id}` })
-          : response.sendStatus(204)
+        !deleted ? response.status(404).json({ error: `Cannot find Item with ID of ${id}` }) : response.sendStatus(204)
     )
     .catch(error => response.status(500).json({ error }));
 });
