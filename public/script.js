@@ -123,4 +123,6 @@ $('.inventory').on('click', '.add-btn', addToCart);
 $('.inventory').on('click', '.add-btn', appendTotal);
 $('.order-btn').on('click', () => {
   checkOut();
+  localStorage.clear();
+  appendTotal();
 });
